@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Digite a tarefa e a data de conclusão (opcional):</h1>
+
+    <input type="text" id="tituloTarefa" placeholder="Digite sua tarefa">
+    <input type="date" id="dataConclusao">
+
+    <button type="button" onclick="AdicionarTarefa()">Adicionar</button>
+
+    <div id="listaTarefas">Nenhuma tarefa cadastrada</div>
+
+    <script>
+        // Aplicação MVC (Modelagem, Visualização e Controle)
+        let tarefas;
+
+        const tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'));
+
+        if (Array.isArray(tarefasSalvas)) {
+            tarefas = tarefasSalvas;
+        } else {
+            tarefas = [];
+        }
+
+        // Salvar tarefas no navegador
+        function salvarTarefas() {
+            localStorage.setItem('tarefas', JSON.stringify(tarefas));
+        }
+
+        // Mostrar tarefas na tela
+        function renderizarTarefas() {
+            const listaTarefas = document.getElementById('listaTarefas');
+            listaTarefas.innerHTML = "";
+
+            if (tarefas.length === 0) {
+                listaTarefas.innerHTML = "Nenhuma tarefa cadastrada";
+                return;
+            }
+
+            tarefas.forEach(function(tarefa) {
+                const divTarefa = document.createElement('div');
+
+                const textoTarefa = document.createElement('span');
+                textoTarefa.textContent =
+                    tarefa.tituloTarefa + ' - ' +
+                    (tarefa.dataConclusao || 'Sem data definida');
+
+                divTarefa.appendChild(textoTarefa);
+
+                const botaoApagar = document.createElement('button');
+                botaoApagar.textContent = "Apagar";
+                botaoApagar.id = tarefa.idTarefa;
+                botaoApagar.onclick = apagarTarefa;
+
+                divTarefa.appendChild(botaoApagar);
+                listaTarefas.appendChild(divTarefa);
+            });
+        }
+
+        // Adicionar uma nova tarefa
+        function AdicionarTarefa() {
+            const tituloTarefa = document.getElementById('tituloTarefa').value.trim();
+            const dataConclusao = document.getElementById('dataConclusao').value;
+
+            if (tituloTarefa === "") {
+                alert("Digite o título da tarefa!");
+                return;
+            }
+
+            tarefas.push({
+                tituloTarefa: tituloTarefa,
+                dataConclusao: dataConclusao,
+                idTarefa: Date.now()
+            });
+
+            salvarTarefas();
+            renderizarTarefas();
+
+            document.getElementById('tituloTarefa').value = "";
+            document.getElementById('dataConclusao').value = "";
+        }
+
+        // Apagar uma tarefa
+        function apagarTarefa(evento) {
+            const idTarefa = Number(evento.target.id);
+
+            tarefas = tarefas.filter(function(tarefa) {
+                return tarefa.idTarefa !== idTarefa;
+            });
+
+            salvarTarefas();
+            renderizarTarefas();
+        }
+
+        // Carregar as tarefas ao abrir a página
+        renderizarTarefas();
+    </script>
+</body>
+</html>
