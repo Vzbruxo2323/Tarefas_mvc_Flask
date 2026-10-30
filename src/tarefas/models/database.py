@@ -4,7 +4,8 @@ from mysql.connector import Error
 
 
 class Database:
-    def __init__(self):
+    """Classe que gerencia conexão e operações com um banco de dados MySQL."""
+    def __init__(self)->None:
         self.host = 'localhost'
         self.username = 'root'
         self.password = 'admin'
@@ -12,7 +13,8 @@ class Database:
         self.connection = None
         self.cursor = None
 
-    def conectar(self):
+    def conectar(self)->None:
+        """Estabelace um conexão com banco de dados MySQL"""
         try:
             self.connection = mc.connect(
                 host=self.host,
@@ -30,7 +32,8 @@ class Database:
             self.connection = None
             self.cursor = None
 
-    def desconectar(self):
+    def desconectar(self)->None:
+        """Encerra a conexão com banco de dados e o cursor, se existirem."""
         if self.cursor:
             self.cursor.close()
 
@@ -41,7 +44,8 @@ class Database:
 
 
 # Área 51
-
+"""Tudoque for escrito dessa área
+será lido e executado como string."""
 bd = Database()
 bd.conectar()
 bd.desconectar()
