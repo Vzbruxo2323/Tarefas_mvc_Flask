@@ -2,7 +2,7 @@ CREATE DATABASE IS NOT `tarefas`
 
 USE `tarefas`;
 
-DROP TABLE IF EXISTS `tarefas`;
+
 
 CRAETE TABLE IF NOT EXISTS `tarefa`(
     `id_tarefa` INT NOT NULL AUTO_INCRMENT PRIMARY KEY,
