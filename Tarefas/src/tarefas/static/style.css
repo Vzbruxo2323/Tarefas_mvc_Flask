@@ -147,7 +147,7 @@ button:focus-visible {
     margin-top: 16px;
 }
 
-/* Cada tarefa é um div criado pelo JavaScript */
+/* Cada tarefa */
 
 #listaTarefas > div {
     display: flex;
@@ -180,7 +180,11 @@ button:focus-visible {
 }
 
 
-#listaTarefas button {
+/* Botões Apagar e Editar */
+
+#listaTarefas button,
+#listaTarefas a.botao-editar {
+    display: inline-block;
     flex-shrink: 0;
     margin-left: 0 !important;
     padding: 8px 13px;
@@ -194,6 +198,7 @@ button:focus-visible {
     font-size: 0.85rem;
     font-weight: 700;
 
+    text-decoration: none;
     cursor: pointer;
 
     transition:
@@ -202,7 +207,11 @@ button:focus-visible {
         border-color 0.2s ease;
 }
 
-#listaTarefas button:hover {
+
+/* Efeito ao passar o mouse */
+
+#listaTarefas button:hover,
+#listaTarefas a.botao-editar:hover {
     color: var(--branco);
     background: var(--laranja-escuro);
     border-color: var(--laranja-escuro);
@@ -224,7 +233,8 @@ button:focus-visible {
         padding: 14px;
     }
 
-    #listaTarefas button {
+    #listaTarefas button,
+    #listaTarefas a.botao-editar {
         padding: 7px 10px;
     }
 }

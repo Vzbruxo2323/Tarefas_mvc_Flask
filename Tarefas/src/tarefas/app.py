@@ -4,6 +4,7 @@ from flask import Flask, redirect, render_template, request, url_for
 from tarefas.models.database import init_db
 from tarefas.models.tarefas import Tarefa
 
+
 app = Flask(__name__)
 
 with app.app_context():
@@ -15,6 +16,7 @@ def test():
     return 'Servidor online!'
 
 
+# Página principal e cadastro de tarefas
 @app.route('/', methods=['GET', 'POST'])
 def home():
 
@@ -25,7 +27,6 @@ def home():
 
         data_corrigida = data_conclusao_form or None
 
-        # Instanciamos uma nova tarefa com os dados recebidos do formulário
         if titulo_form:
 
             tarefa = Tarefa(
@@ -33,7 +34,6 @@ def home():
                 data_conclusao=data_corrigida
             )
 
-            # Salvamos a tarefa no banco
             tarefa.salvarTarefa()
 
         return redirect(url_for('home'))
@@ -49,21 +49,19 @@ def home():
     )
 
 
-# Funcionalidade para apagar cada tarefa cadastrada
+# Apagar uma tarefa
 @app.route('/delete/<int:id>', methods=['POST'])
 def apagar_id_especificado(id):
 
-    tarefa = Tarefa(titulo='', id=id)
-    tarefa.excluirTarefa()
+    Tarefa.apagarTarefa(id)
 
     return redirect(url_for('home'))
 
 
-# Rota para atualizar uma tarefa específica
+# Editar uma tarefa
 @app.route('/atualizar/<int:id_tarefa>', methods=['GET', 'POST'])
 def atualizar_tarefa(id_tarefa):
 
-    # Carrega a tarefa do banco
     tarefa = Tarefa.buscarTarefa(id_tarefa)
 
     if tarefa is None:
@@ -78,7 +76,6 @@ def atualizar_tarefa(id_tarefa):
 
         if titulo_form:
 
-            # Envia os dados alterados para o banco
             Tarefa.atualizarTarefa(
                 id_tarefa,
                 titulo_form,
@@ -89,8 +86,8 @@ def atualizar_tarefa(id_tarefa):
 
     return render_template(
         'base.html',
-        titulo='Atualizar tarefa',
-        titulo_da_pagina='Atualizar tarefa',
+        titulo='Editar tarefa',
+        titulo_da_pagina='Editar tarefa',
         tarefas_da_pagina=Tarefa.listarTarefas(),
         tarefa=tarefa
     )

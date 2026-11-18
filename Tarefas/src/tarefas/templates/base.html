@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -37,7 +36,7 @@
         >
 
         {% if tarefa %}
-            <button type="submit">Atualizar</button>
+            <button type="submit">Salvar edição</button>
         {% else %}
             <button type="submit">Adicionar</button>
         {% endif %}
@@ -66,8 +65,11 @@
                     <button type="submit">Apagar</button>
                 </form>
 
-                <a href="{{ url_for('atualizar_tarefa', id_tarefa=tarefa.id_tarefa) }}">
-                    Atualizar
+                <a
+                    class="botao-editar"
+                    href="{{ url_for('atualizar_tarefa', id_tarefa=tarefa.id_tarefa) }}"
+                >
+                    Editar
                 </a>
 
             </li>
