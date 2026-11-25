@@ -51,3 +51,6 @@ pacotes do seu projeto.
 uv run flask run
 ```
 
+# Projeto Tarefas
+
+Sistema de gerenciamento de tarefas desenvolvido em Python utilizando Flask.
