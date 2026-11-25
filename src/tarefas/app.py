@@ -1,5 +1,6 @@
 
 from flask import Flask, render_template
+
 from tarefas.models.database import init_db
 
 app = Flask(__name__)
